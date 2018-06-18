@@ -1,0 +1,9 @@
+package com.bjethwan;
+
+public class Product {
+	private String name;
+	private double price;
+	
+	
+
+}

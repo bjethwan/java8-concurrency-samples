@@ -1,0 +1,19 @@
+INDEX VERSION 1.127+C:\java8-concurrency-samples\.metadata\.plugins\org.eclipse.jdt.core
+1224890154.index
+2533669505.index
+1327266636.index
+1730370958.index
+3758328343.index
+3802661666.index
+3144512696.index
+833627874.index
+1504982490.index
+2644822401.index
+235793211.index
+1749807925.index
+2120687540.index
+3328247233.index
+3490383504.index
+2774762857.index
+1685723122.index
+3046915137.index

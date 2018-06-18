@@ -1,0 +1,12 @@
+package com.bjethwan;
+
+
+import java.util.ArrayList;
+
+public class ProductGenerator {
+	
+	public static List<Product> generateListOfProducts(int num){
+		List<Product> productList = new ArrayList();
+	}
+
+}

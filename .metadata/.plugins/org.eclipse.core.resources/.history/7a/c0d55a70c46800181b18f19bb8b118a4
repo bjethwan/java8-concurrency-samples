@@ -1,0 +1,20 @@
+package com.bjethwan;
+
+import java.util.List;
+import java.util.concurrent.RecursiveAction;
+
+public class Task extends RecursiveAction{
+	
+	private List<Product> products;
+	private int first;
+	private int last;
+	private double increment;
+	
+	public Task(List<Product> productList, int first, int last, double increment){
+		this.products = productList;
+		this.first=first;
+		this.last=last;
+		this.increment=increment;
+	}
+
+}

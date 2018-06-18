@@ -1,0 +1,46 @@
+package com.bjethwan;
+
+import static com.bjethwan.Currency.USD;
+
+import java.util.concurrent.CompletableFuture;
+
+public class PriceCatalogueExample
+{
+	private final Catalogue catalogue = new Catalogue();
+	private final PriceFinder priceFinder = new PriceFinder();
+	private final ExchangeService exchangeService = new ExchangeService();
+
+	public static void main(String[] args)
+	{
+		new PriceCatalogueExample().findLocalDiscountedPrice(Currency.CHF, "IphoneX");
+	}
+
+	private void findLocalDiscountedPrice(final Currency localCurrency, final String productName)
+	{
+		long time = System.currentTimeMillis();
+
+		lookupProductByName(productName)
+			.thenCompose(this::findBestPrice)
+			.thenCombine(lookupExchangeRate(Currency.USD, localCurrency), this::exchange)
+			.thenAccept((localPrice) -> {
+				System.out.printf("A %s will cost us %f %s\n", productName, localPrice, localCurrency);
+				System.out.printf("It took us %d ms to calculate this\n", System.currentTimeMillis() - time);
+			})
+			.join();
+	}
+
+	private CompletableFuture<Product> lookupProductByName(String productName){
+		return CompletableFuture.supplyAsync(()->catalogue.productByName(productName));
+	}
+	private CompletableFuture<Price> findBestPrice(Product product){
+		return CompletableFuture.supplyAsync(()->priceFinder.findBestPrice(product));
+	}
+	private CompletableFuture<Double> lookupExchangeRate(Currency source, Currency destination){
+		return CompletableFuture.supplyAsync(()-> exchangeService.lookupExchangeRate(source, destination));
+	}
+	private double exchange(Price price, double exchangeRate)
+	{
+		return Utils.round(price.getAmount() * exchangeRate);
+	}
+
+}

@@ -1,0 +1,11 @@
+package com.bjethwan;
+
+import org.junit.Test;
+
+public class TestCopyOnWriteArayList {
+	@Test
+	public void testSnapshotBasedIterator(){
+		
+	}
+
+}

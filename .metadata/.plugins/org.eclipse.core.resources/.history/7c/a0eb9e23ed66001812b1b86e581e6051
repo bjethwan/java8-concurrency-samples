@@ -1,0 +1,39 @@
+package com.bjethwan;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeoutException;
+
+public class ExchangeService {
+
+    public double exchangeCurrency(Currency source, Currency destination, double value) {
+        double rate = lookupExchangeRate(source, destination);
+        return exchange(value, rate);
+    }
+
+    public double exchange(double value, double rate)
+    {
+        return Utils.round(value * rate);
+    }
+    
+    public CompletableFuture<Double> lookupExchangeRateAsync(Currency source, Currency destination) {
+        CompletableFuture<Double> result = new CompletableFuture<>();
+        if(Math.random() < 0.7) {
+            result.completeExceptionally(new TimeoutException("Couldn't connect to the Exchange sorry!"));
+        }
+
+        executorService.submit(() -> {
+            result.complete(getRateWithDelay(source, destination));
+        });
+        return result;
+    }
+
+    public double lookupExchangeRate(Currency source, Currency destination) {
+        return getRateWithDelay(source, destination);
+    }
+
+    private double getRateWithDelay(Currency source, Currency destination) {
+        Utils.randomDelay();
+        return source.rate / destination.rate;
+    }
+
+}

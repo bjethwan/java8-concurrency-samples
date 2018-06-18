@@ -1,0 +1,16 @@
+package com.bjethwan;
+
+import java.util.List;
+import java.util.concurrent.ForkJoinPool;
+
+public class Main {
+	public static void main(String[] args) {
+		
+		List<Product> products = ProductGenerator.generateListOfProducts(10);
+		
+		Task task = new Task(products, 0, products.size(), .12);
+		
+		ForkJoinPool forkJoinPool = new ForkJoinPool();
+		forkJoinPool.execute(task);
+	}
+}
